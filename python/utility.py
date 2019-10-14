@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.signal
 import cv2
+import math
 
 
 # preprocesses given image, returns padded version and array w/ original dimensions for final image
@@ -24,12 +25,12 @@ def prepare_image(im: np.ndarray, padding: int, pad_type: str):
     else:
         print('This should not have been reached')
 
-    return im.astype(dtype='float64'), im2.astype(dtype='float64')  # return processed image
+    return im.astype(dtype=np.float32), im2.astype(dtype=np.float32)  # return processed image
 
 
 # post processes given image
 # takes in image and whether or not to convert to rgb
-def pp_image(im: np.ndarray, g2rgb: bool) -> np.ndarray:
+def pp_image(im: np.ndarray, g2rgb: bool = False) -> np.ndarray:
     if g2rgb:
         im = cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)
     # return pp image with correct type
@@ -70,3 +71,4 @@ def gauss_filter(im: np.ndarray, kernel: int) -> np.ndarray:
 
     # post process image and return it
     return pp_image(im_proc, False)
+
