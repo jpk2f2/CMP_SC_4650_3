@@ -2,6 +2,7 @@ import cv2
 import matplotlib
 import utility
 import cannyEdgeDetect as ced
+import numpy as np
 
 matplotlib.use('TkAgg')
 
@@ -33,14 +34,19 @@ im_lenna_fx, im_lenna_fy, im_lenna_f, im_lenna_d = ced.sobel_filter(im_lenna)
 # im_lenna_fx = cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
 # im_lenna_fy = cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
 
-# cv2.imshow('Fx', cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-# cv2.imshow('Fy', cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-# cv2.imshow('F', cv2.normalize(im_lenna_f, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-# cv2.imshow('D', cv2.normalize(im_lenna_d, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-# cv2.waitKey(0)
+cv2.imshow('Fx', cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+cv2.imshow('Fy', cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+cv2.imshow('F', cv2.normalize(im_lenna_f, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+cv2.imshow('D', cv2.normalize(im_lenna_d, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+cv2.waitKey(0)
 
-temp = ced.nonmax_supress(im_lenna_f, im_lenna_d)
-cv2.imshow('nonmax', cv2.normalize(temp, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+im_lenna_thin = ced.nonmax_supress(im_lenna_f, im_lenna_d)
+cv2.imshow('nonmax', cv2.normalize(im_lenna_thin, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+# cv2.waitKey(0)
+# print(cv2.normalize(im_lenna_thin, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+temp = ced.hysteresis(im_lenna_thin, 25, 5)
+cv2.imshow('hyst 1', temp)
+cv2.imshow('hyst 2', cv2.normalize(temp, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
 cv2.waitKey(0)
 
 
