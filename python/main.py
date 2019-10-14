@@ -27,19 +27,20 @@ cv2.imshow("2", im_lenna)
 cv2.waitKey(0)
 
 im_lenna_fx, im_lenna_fy, im_lenna_f, im_lenna_d = ced.sobel_filter(im_lenna)
+# print(im_lenna_d)
 # im_lenna_fx, im_lenna_fy = ced.sobel_filter(im_lenna)
 
 # im_lenna_fx = cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
 # im_lenna_fy = cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
 
-cv2.imshow('Fx', cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.imshow('Fy', cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.imshow('F', cv2.normalize(im_lenna_f, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.imshow('D', cv2.normalize(im_lenna_d, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+# cv2.imshow('Fx', cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+# cv2.imshow('Fy', cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+# cv2.imshow('F', cv2.normalize(im_lenna_f, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+# cv2.imshow('D', cv2.normalize(im_lenna_d, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+# cv2.waitKey(0)
+
+temp = ced.nonmax_supress(im_lenna_f, im_lenna_d)
+cv2.imshow('nonmax', cv2.normalize(temp, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
 cv2.waitKey(0)
-
-
-
-
 
 
