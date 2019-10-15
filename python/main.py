@@ -1,8 +1,7 @@
 import cv2
 import matplotlib
 import utility
-import cannyEdgeDetect as ced
-import numpy as np
+import cannyEdgeDetect as cED
 
 matplotlib.use('TkAgg')
 
@@ -15,38 +14,28 @@ im_1001e = cv2.imread('resources/Fig1001(e).tif', 0)
 im_1001f = cv2.imread('resources/Fig1001(f).tif', 0)
 im_lenna = cv2.imread('resources/Lenna.png', 0)
 
-# code below is test setup for assignment requirements
-# should be cleaned up after
 
-# display starting image
-cv2.imshow("1", im_lenna)
-cv2.waitKey(0)
-# apply gauss filter
-im_lenna = utility.gauss_filter(im_lenna, 1)
-# display gauss filtered image
-cv2.imshow("2", im_lenna)
-cv2.waitKey(0)
+def action(im, sigma, t_h, t_l, name):
+    im_gauss = utility.gauss_filter(im, sigma)
+    im_fx, im_fy, im_f, im_d = cED.sobel_filter(im_gauss)
+    im_thin = cED.nonmax_supress(im_f, im_d)
+    im_hyst = cED.hysteresis(im_thin, t_h * 255, t_l * 255)
 
-im_lenna_fx, im_lenna_fy, im_lenna_f, im_lenna_d = ced.sobel_filter(im_lenna)
-# print(im_lenna_d)
-# im_lenna_fx, im_lenna_fy = ced.sobel_filter(im_lenna)
+    utility.canny_display([im_lenna, im_gauss, im_fx, im_fy, im_f, im_d, im_thin,
+                           im_hyst], sigma, t_h, t_l)
+    utility.canny_write([im_lenna, im_gauss, im_fx, im_fy, im_f, im_d,
+                         im_thin, im_hyst], sigma, t_h, t_l, name)
 
-# im_lenna_fx = cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
-# im_lenna_fy = cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
-
-cv2.imshow('Fx', cv2.normalize(im_lenna_fx, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.imshow('Fy', cv2.normalize(im_lenna_fy, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.imshow('F', cv2.normalize(im_lenna_f, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.imshow('D', cv2.normalize(im_lenna_d, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.waitKey(0)
-
-im_lenna_thin = ced.nonmax_supress(im_lenna_f, im_lenna_d)
-cv2.imshow('nonmax', cv2.normalize(im_lenna_thin, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-# cv2.waitKey(0)
-# print(cv2.normalize(im_lenna_thin, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-temp = ced.hysteresis(im_lenna_thin, 25, 5)
-cv2.imshow('hyst 1', temp)
-cv2.imshow('hyst 2', cv2.normalize(temp, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
-cv2.waitKey(0)
+    return
 
 
+action(im_lenna, 1, 0.10, 0.03, 'lenna')
+action(im_lenna, 1, 0.15, 0.03, 'lenna')
+action(im_lenna, 1, 0.10, 0.03, 'lenna')
+
+action(im_1001a, 1, 0.10, 0.03, '1001')
+action(im_1016, 1, 0.15, 0.03, '1016')
+action(im_1016, 2, 0.10, 0.03, '1016')
+action(im_1016, 3, 0.10, 0.03, '1016')
+action(im_1016, 4, 0.10, 0.03, '1016')
+action(im_1016, 5, 0.10, 0.03, '1016')

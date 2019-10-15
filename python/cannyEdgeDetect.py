@@ -2,6 +2,7 @@ import math
 import numpy as np
 import scipy.signal
 import utility
+import cv2
 from filters import PREWITTX, PREWITTY, SOBELX, SOBELY
 
 
@@ -64,15 +65,16 @@ def nonmax_supress(im, d):
 def hysteresis(im, t_h, t_l):
     dimensions = im.shape
     im2 = np.zeros((dimensions[0], dimensions[1]), np.float32)
-
+    # t_h = t_h * 255.0
+    # t_l = t_l * 255.0
     for i in range(2, dimensions[0] - 2):
         for j in range(2, dimensions[1] - 2):
-            if im[i, j] < t_l:
+            if im[i, j] <= t_l:
                 im2[i, j] = 0
             elif im[i, j] >= t_h:
                 im2[i, j] = 255
-            elif im[i + 1, j] >= t_h or im[i - 1, j] >= t_h or im[i, j + 1] >= t_h or im[i, j - 1] >= t_h or im[
-                i - 1, j - 1] >= t_h \
-                    or im[i - 1, j + 1] >= t_h or im[i + 1, j + 1] >= t_h or im[i + 1, j - 1] >= t_h:
+            elif im[i + 1, j] >= t_h or im[i - 1, j] >= t_h or im[i, j + 1] >= t_h or im[i, j - 1] >= t_h \
+                    or im[i - 1, j - 1] >= t_h or im[i - 1, j + 1] >= t_h or im[i + 1, j + 1] >= t_h \
+                    or im[i + 1, j - 1] >= t_h:
                 im2[i, j] = 255
     return im2

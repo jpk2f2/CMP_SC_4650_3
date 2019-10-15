@@ -72,3 +72,23 @@ def gauss_filter(im: np.ndarray, kernel: int) -> np.ndarray:
     # post process image and return it
     return pp_image(im_proc, False)
 
+
+def canny_display(ims, sig, t_h, t_l):
+    titles = ('original', 'gauss filtered w/ sigma: {}'.format(sig), 'Fx', 'Fy', 'F', 'D', 'Nonmax Suppression',
+              'Hysterisis w/ t_h: {} and t_l: {}'.format(t_h, t_l))
+    for i in range(0, len(ims)):
+        cv2.imshow(titles[i], cv2.normalize(ims[i], None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return
+
+
+def canny_write(ims, sig, t_h, t_l, im_name):
+    titles = ('original', 'gauss sigma', 'Fx', 'Fy', 'F', 'D', 'Nonmax Suppression',
+              'Hysterisis')
+    for i in range(0, len(ims)):
+        cv2.imwrite('resources/plots/{}_{}_{}-{}-{}.png'.format(im_name, titles[i], sig, t_h, t_l),
+                    cv2.normalize(ims[i], None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+    return
+
