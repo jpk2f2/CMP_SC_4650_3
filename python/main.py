@@ -21,9 +21,9 @@ def action(im, sigma, t_h, t_l, name):
     im_thin = cED.nonmax_supress(im_f, im_d)
     im_hyst = cED.hysteresis(im_thin, t_h * 255, t_l * 255)
 
-    utility.canny_display([im_lenna, im_gauss, im_fx, im_fy, im_f, im_d, im_thin,
+    utility.canny_display([im, im_gauss, im_fx, im_fy, im_f, im_d, im_thin,
                            im_hyst], sigma, t_h, t_l)
-    utility.canny_write([im_lenna, im_gauss, im_fx, im_fy, im_f, im_d,
+    utility.canny_write([im, im_gauss, im_fx, im_fy, im_f, im_d,
                          im_thin, im_hyst], sigma, t_h, t_l, name)
 
     return
