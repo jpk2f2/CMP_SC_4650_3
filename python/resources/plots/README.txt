@@ -1,0 +1,1 @@
+All plots are in the form of {image name}_{plot type}_{sigma}-{high threshold}-{low threshold}.{image format}
