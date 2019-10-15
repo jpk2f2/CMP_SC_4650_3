@@ -31,7 +31,7 @@ def action(im, sigma, t_h, t_l, name):
 
 action(im_lenna, 1, 0.10, 0.03, 'lenna')
 action(im_lenna, 1, 0.15, 0.03, 'lenna')
-action(im_lenna, 1, 0.10, 0.03, 'lenna')
+action(im_lenna, 1, 0.20, 0.10, 'lenna')
 
 action(im_1001a, 1, 0.10, 0.03, '1001')
 action(im_1016, 1, 0.15, 0.03, '1016')
