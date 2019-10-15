@@ -73,20 +73,30 @@ def gauss_filter(im: np.ndarray, kernel: int) -> np.ndarray:
     return pp_image(im_proc, False)
 
 
+# display canny edge detection images
+# take in list of images, high threshold, low threshold
+# uses cv2 to display images with given titles for type
+# dynamically set values in title for sigma, threshold, etc
 def canny_display(ims, sig, t_h, t_l):
     titles = ('original', 'gauss filtered w/ sigma: {}'.format(sig), 'Fx', 'Fy', 'F', 'D', 'Nonmax Suppression',
               'Hysterisis w/ t_h: {} and t_l: {}'.format(t_h, t_l))
     for i in range(0, len(ims)):
+        # show normalized images with given titles
         cv2.imshow(titles[i], cv2.normalize(ims[i], None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
+        # cv2.imshow(titles[i], ims[i])
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     return
 
 
+# save canny edge detection images to file
+# takes in images list, sigma, threshold high, threshold low, and the image name
 def canny_write(ims, sig, t_h, t_l, im_name):
+    # set titles for saving
     titles = ('original', 'gauss sigma', 'Fx', 'Fy', 'F', 'D', 'Nonmax Suppression',
               'Hysterisis')
+    # loop through images
     for i in range(0, len(ims)):
         cv2.imwrite('resources/plots/{}_{}_{}-{}-{}.png'.format(im_name, titles[i], sig, t_h, t_l),
                     cv2.normalize(ims[i], None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1))
